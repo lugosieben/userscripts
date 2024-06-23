@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Clear YouTube Playlist
 // @namespace    http://github.com/lugosieben
-// @version      1.0
+// @version      1.1
 // @description  try to take over the world!
 // @author       lugosieben
 // @match        https://www.youtube.com/*
@@ -12,6 +12,7 @@
 
 (function() {
     var latestParagraph;
+    var interval;
     function run () {
     if (latestParagraph) latestParagraph.remove()
     setTimeout(() => {
@@ -26,7 +27,7 @@
     paragraph.class = "clear-youtube-playlist-paragraph"
     paragraph.style = "cursor:pointer"
     paragraph.onclick = () => {
-        setInterval(function () {
+    interval = setInterval(function () {
             let video = document.getElementsByTagName('ytd-playlist-video-renderer')[0];
 
             video.querySelector('#primary button[aria-label="Action menu"]').click();
@@ -53,5 +54,6 @@
     run()
     document.addEventListener('yt-navigate-finish', function() {
   run()
+  clearInterval(interval)
 });
 })();
