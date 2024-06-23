@@ -7,8 +7,7 @@
 // @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
-// @require      https://code.jquery.com/jquery-3.6.3.min.js
-// @require      https://gist.github.com/raw/2625891/waitForKeyElements.js
+// @license      none
 // ==/UserScript==
 
 (function() {
@@ -17,7 +16,6 @@
     if (latestParagraph) latestParagraph.remove()
     setTimeout(() => {
         'use strict';
-    console.log("Scriptee")
 
     let descriptionElement = document.getElementsByClassName("description")[0]
     if (!descriptionElement) return;
