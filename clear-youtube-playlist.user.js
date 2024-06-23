@@ -4,21 +4,28 @@
 // @version      1.0
 // @description  try to take over the world!
 // @author       lugosieben
-// @match        https://www.youtube.com/playlist?*
+// @match        https://www.youtube.com/*
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=youtube.com
 // @grant        none
+// @require      https://code.jquery.com/jquery-3.6.3.min.js
+// @require      https://gist.github.com/raw/2625891/waitForKeyElements.js
 // ==/UserScript==
 
 (function() {
+    var latestParagraph;
+    function run () {
+    if (latestParagraph) latestParagraph.remove()
     setTimeout(() => {
         'use strict';
     console.log("Scriptee")
 
     let descriptionElement = document.getElementsByClassName("description")[0]
+    if (!descriptionElement) return;
     let descriptionSpan = descriptionElement.querySelector("#snippet").querySelector("#snippet-text").querySelector("#plain-snippet-text")
 
     let paragraph = document.createElement("p")
     paragraph.innerHTML = "<a><u>Clear this playlist</u></a>"
+    paragraph.class = "clear-youtube-playlist-paragraph"
     paragraph.style = "cursor:pointer"
     paragraph.onclick = () => {
         setInterval(function () {
@@ -42,5 +49,11 @@
     }
 
     descriptionSpan.appendChild(paragraph)
-    }, 3000)
+    latestParagraph = paragraph
+    }, 0)
+}
+    run()
+    document.addEventListener('yt-navigate-finish', function() {
+  run()
+});
 })();
