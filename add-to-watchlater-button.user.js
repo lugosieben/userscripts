@@ -23,12 +23,15 @@
         addedButtons = []
 
         for (const block of metadataElements) {
-            let span = document.createElement('span')
-            span.class = "inline-metadata-item style-scope ytd-video-meta-block"
-            span.innerHTML = "Add to Watch Later"
-            span.onclick = () => {
+            let a = document.createElement('a')
+            a.class = "inline-metadata-item style-scope ytd-video-meta-block"
+            a.innerHTML = "Add to Watch Later"
+            a.href = "javascript:null"
+            a.style = "color:#606060;"
+            a.onclick = () => {
                 event.stopPropagation()
-                var details = span.parentNode.parentNode.parentNode
+                var details = a.parentNode.parentNode.parentNode
+                if (details.id != "meta") { details = details.parentNode.parentNode } // Handle Sidebar on Video Player
                 var threeDotButton = details.querySelector('#button button[aria-label="Action menu"]')
                 threeDotButton.click()
                 setTimeout(() => { // Clicks the "Save to Watch Later" button after 300 ms
@@ -39,8 +42,8 @@
                 }, 300)
                 return true
             }
-            block.appendChild(span)
-            addedButtons.push(span)
+            block.appendChild(a)
+            addedButtons.push(a)
         }
     }
 
