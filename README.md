@@ -1,3 +1,3 @@
 - Youtube
--   Clear whole playlist with 1 button
--   Add to watch later playlist with 1 button beneath each video thumbnail
+  -   Clear whole playlist with 1 button
+  -   Add to watch later playlist with 1 button beneath each video thumbnail
