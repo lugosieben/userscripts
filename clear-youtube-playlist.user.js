@@ -13,47 +13,48 @@
 (function() {
     var latestParagraph;
     var interval;
-    function run () {
-    if (latestParagraph) latestParagraph.remove()
-    setTimeout(() => {
-        'use strict';
 
-    let descriptionElement = document.getElementsByClassName("description")[0]
-    if (!descriptionElement) return;
-    let descriptionSpan = descriptionElement.querySelector("#snippet").querySelector("#snippet-text").querySelector("#plain-snippet-text")
+    function run() {
+        if (latestParagraph) latestParagraph.remove()
+        setTimeout(() => {
+            'use strict';
 
-    let paragraph = document.createElement("p")
-    paragraph.innerHTML = "<a><u>Clear this playlist</u></a>"
-    paragraph.class = "clear-youtube-playlist-paragraph"
-    paragraph.style = "cursor:pointer"
-    paragraph.onclick = () => {
-    interval = setInterval(function () {
-            let video = document.getElementsByTagName('ytd-playlist-video-renderer')[0];
+            let descriptionElement = document.getElementsByClassName("description")[0]
+            if (!descriptionElement) return;
+            let descriptionSpan = descriptionElement.querySelector("#snippet").querySelector("#snippet-text").querySelector("#plain-snippet-text")
 
-            video.querySelector('#primary button[aria-label="Action menu"]').click();
+            let paragraph = document.createElement("p")
+            paragraph.innerHTML = "<a><u>Clear this playlist</u></a>"
+            paragraph.class = "clear-youtube-playlist-paragraph"
+            paragraph.style = "cursor:pointer"
+            paragraph.onclick = () => {
+                interval = setInterval(function() {
+                    let video = document.getElementsByTagName('ytd-playlist-video-renderer')[0];
 
-            var things = document.evaluate(
-                '//span[contains(text(),"Remove from")]',
-                document,
-                null,
-                XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
-                null
-            );
+                    video.querySelector('#primary button[aria-label="Action menu"]').click();
 
-            for (var i = 0; i < things.snapshotLength; i++)
-            {
-                things.snapshotItem(i).click();
+                    var things = document.evaluate(
+                        '//span[contains(text(),"Remove from")]',
+                        document,
+                        null,
+                        XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+                        null
+                    );
+
+                    for (var i = 0; i < things.snapshotLength; i++) {
+                        things.snapshotItem(i).click();
+                    }
+                }, 250);
             }
-        }, 250);
-    }
 
-    descriptionSpan.appendChild(paragraph)
-    latestParagraph = paragraph
-    }, 0)
-}
+            descriptionSpan.appendChild(paragraph)
+            latestParagraph = paragraph
+        }, 0)
+    }
+  
     run()
     document.addEventListener('yt-navigate-finish', function() {
-  run()
-  clearInterval(interval)
-});
+        run()
+        clearInterval(interval)
+    });
 })();
